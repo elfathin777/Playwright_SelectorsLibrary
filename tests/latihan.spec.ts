@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { beforeEach } from "node:test";
+import path from "path";
 import { setTimeout } from "timers/promises";
 
 
@@ -69,10 +70,44 @@ test.describe('Latihan Selector Playwright', () => {
         await expect(flash).toContainText('You logged into a secure area!');
     })
 
-    test('', async ({ page }) => {
+    test('JavaScript Alerts', async ({ page }) => {
+        await page.getByText('JavaScript Alerts').click();
+        await expect(page.getByRole('heading', { name: /JavaScript Alerts/i })).toBeVisible();
+        
+        page.on('dialog', async dialog => {
+            console.log(dialog.message());
+            await dialog.dismiss();
+        });
+
+        await page.getByRole('button', { name: /Click for JS Confirm/i }).click();
+        
+        await expect(page.getByText('You clicked: Cancel')).toBeVisible();
+    })
+    
+    test('File handling', async ({ page }) => {
+        await page.getByText('File Upload').click();
+        await expect(page.getByRole('heading', { name: /File Uploader/i })).toBeVisible();
+
+        const pathFile = path.join(__dirname, '../asset/document.pdf');
+
+        await page.locator('#file-upload').setInputFiles(pathFile);
+        await page.locator('#file-submit').click();
+
+        await expect(page.getByRole('heading', { name: /File Uploaded!/i })).toBeVisible();
+        await expect(page.locator('#uploaded-files')).toContainText('document.pdf');
+        
+    })
+    
+    test('Shadow DOM', async ({ page }) => {
+        await page.getByText('Shadow DOM').click();
+        await expect(page.getByRole('heading', { name: /Simple template/i })).toBeVisible();
+
+        const shadowText = page.locator('span[slot="my-text"]');
+    
+        await expect(shadowText).toBeVisible();
+        await expect(shadowText).toHaveText(`Let's have some different text!`);
         
     })
     
     
-
 })
