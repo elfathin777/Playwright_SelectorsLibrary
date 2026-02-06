@@ -109,5 +109,76 @@ test.describe('Latihan Selector Playwright', () => {
         
     })
     
+    test('Multiple Windows', async ({ page }) => {
+        await page.getByText('Multiple Windows').click();
+        await expect(page.getByRole('heading', { name: /Opening a new window/i })).toBeVisible();
+
+        const [newPage] = await Promise.all([
+            page.waitForEvent('popup'),
+            page.getByRole('link', { name: /Click Here/i }).click()]
+        );
+
+        await expect(page.getByRole('heading', { name: /New Window/i })).toBeVisible();
+        await newPage.close();
+        
+        await expect(page.getByRole('heading', { name: /Opening a new window/i })).toBeVisible();
+    })
+
+    test('Dynamic Controls', async ({ page }) => {
+        await page.getByRole('link', { name: /Dynamic Controls/i }).click();
+        await expect(page.getByRole('heading', { name: /Dynamic Controls/i })).toBeVisible();
+
+        const message = page.locator('#message');
+        const inputField = page.getByRole('textbox');
+
+        await page.getByRole('button', { name: /Remove/i }).click();
+        await expect(message).toContainText(`It's gone!`);
+        
+        await page.getByRole('button', { name: /Enable/i }).click();
+
+        await expect(message).toContainText(`It's enabled!`);
+        await expect(inputField).toBeEditable();
+        await inputField.fill("Playwright is fast!");
+    })
+    
+    
+    test('Sortable Data Tables', async ({ page }) => {
+        await page.getByRole('link', { name: /Sortable Data Tables/i }).click();
+        await expect(page.getByRole('heading', { name: /Data Tables/i })).toBeVisible();
+        
+        const jasonRow = page.locator('#table1 tbody tr').filter({ hasText: 'Jason' }).filter({ hasText: ' Doe' });
+        const dueValue = jasonRow.locator('td').nth(3);
+        
+        await expect(dueValue).toHaveText('$100.00');
+        
+        await page.locator('#table1 thead th').filter({ hasText: 'Last Name' }).click();
+        
+        const firstRowLastName = await page.locator('#table1 tbody tr').first().locator('td').first();
+        
+        await expect(firstRowLastName).toHaveText('Bach');
+    })
+    
+    test('Infinite Scroll', async ({ page }) => {
+        await page.getByRole('link', { name: /Infinite Scroll/i }).click();
+        await expect(page.getByRole('heading', { name: /Infinite Scroll/i })).toBeVisible();
+        
+        // Define the minimum number of content blocks we want to load
+        const targetCount = 5;
+
+        await expect.poll(async () => {
+            // Scroll down by 1000 pixels on each poll attempt
+            await page.mouse.wheel(0, 1000);
+            
+            // Return the current number of added content blocks
+            return page.locator('.jscroll-added').count();
+        }, {
+            message: 'Gagal mencapai target jumlah elemen setelah scroll berulang',
+            timeout: 20000, // Increase timeout to 20s to allow for slow network responses
+            intervals: [1000, 2000, 5000], // Retry intervals: wait 1s, then 2s, then 5s
+        }).toBeGreaterThanOrEqual(targetCount);
+
+        const finalCount = await page.locator('.jscroll-added').count();
+        console.log(`Berhasil! Total elemen terkumpul: ${finalCount}`);
+    });
     
 })
