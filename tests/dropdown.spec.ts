@@ -12,8 +12,18 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Latihan Selector Playwright', () => {
     test('Dropdown', async ({ page }) => {
-        await page.getByText('Dropdown').click();
-        await expect(page.locator('h3')).toContainText('Dropdown List');
-        await page.locator('#dropdown').selectOption('Option 2');
+        const option = page.locator('#dropdown');
+
+        await expect(page.getByRole('heading', { name: /Dropdown List/i })).toBeVisible();
+
+        const selectOption = 'Option 1'
+
+        if (selectOption === 'Option 1'){
+            await option.selectOption({label: 'Option 1'});
+        }
+        else{
+            await option.selectOption({label: 'Option 2'});
+        }
+
     })    
 })
