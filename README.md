@@ -15,7 +15,7 @@ Based on the official list of examples from `the-internet.herokuapp.com`.
 ## 📋 Challenge Progress
 Progress tracking of automated scenarios from `the-internet.herokuapp.com`.
 
-### ✅ Completed (Day 1 & Day 2)
+### ✅ Completed UI Test
 - [x] **Add/Remove Elements** (Handled dynamic list & counting)
 - [x] **Form Authentication** (Standard login flow & flash message validation)
 - [x] **Drag and Drop** (Simulated mouse drag actions)
@@ -27,6 +27,7 @@ Progress tracking of automated scenarios from `the-internet.herokuapp.com`.
 - [x] **Dynamic Controls** (State verification: `toBeEditable` & `toBeVisible`)
 - [x] **Sortable Data Tables** (Complex row filtering & data validation)
 - [x] **Infinite Scroll** (Implemented **State-Based Polling** to handle flaky dynamic content)
+- [x] **API Testing** (Status codes & POST/GET.DELETE validation)
 
 ### 📝 Backlog (To Do)
 _Common challenges I plan to automate next to broaden my automation coverage:_
