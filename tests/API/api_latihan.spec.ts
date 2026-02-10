@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { request } from 'node:http';
 import { title } from 'node:process';
 
 test.describe('API Testing Basics', () => {
@@ -52,6 +53,73 @@ test.describe('API Testing Basics', () => {
         
         expect(response.status()).toBe(200)
     })
+
+    test('API Schema validation', async ({ request }) => {
+        const response = await request.get('https://jsonplaceholder.typicode.com/posts/1');
+        const responseBody = await response.json();
+
+        expect(typeof responseBody.userId).toBe('number');
+        expect(typeof responseBody.id).toBe('number');
+        expect(typeof responseBody.title).toBe('string');
+        expect(typeof responseBody.body).toBe('string');
+    })
+
+    test('API Patch Methode - Partial update', async ({ request }) => {
+        const response = await request.patch('https://jsonplaceholder.typicode.com/posts/1',{
+            data: {
+                title: 'Title chaged by Haruna'
+            }
+
+        });
+        const responseBody = await response.json();
+        
+        expect(response.status()).toBe(200);
+        expect(responseBody.title).toBe('Title chaged by Haruna');
+
+        console.log('Hasil Patch', responseBody);
+    })
+
+    test('API PUT Method - Partial update', async ({ request }) => {
+        const response = await request.put('https://jsonplaceholder.typicode.com/posts/1',{
+            data: {
+                title: 'Title chaged by Haruna'
+            }
+
+        });
+        const responseBody = await response.json();
+        
+        expect(response.status()).toBe(200);
+        expect(responseBody.title).toBe('Title chaged by Haruna');
+
+        console.log('Hasil Patch', responseBody);
+    })
     
+    test('API List Validation', async ({ request }) => {
+        const response = await request.get('https://jsonplaceholder.typicode.com/posts');
+        const body = await response.json();
+
+        expect(Array.isArray(body)).toBeTruthy();
+        expect(body.length).toBe(100);
+    });
+    
+});
+
+test.describe('Perbedaan PUT vs PATCH', () => {
+
+    test('Uji PUT (Total Replacement)', async ({ request }) => {
+        const response = await request.put('https://jsonplaceholder.typicode.com/posts/1', {
+            data: { title: 'Ganti Total pakai PUT' }
+        });
+        const body = await response.json();
+        console.log('Hasil PUT:', body); 
+    });
+
+    test('Uji PATCH (Partial Update)', async ({ request }) => {
+        const response = await request.patch('https://jsonplaceholder.typicode.com/posts/1', {
+            data: { title: 'Ganti Sebagian pakai PATCH' }
+        });
+        const body = await response.json();
+        console.log('Hasil PATCH:', body);
+    });
 
 });
