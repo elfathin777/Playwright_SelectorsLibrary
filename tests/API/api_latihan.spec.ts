@@ -101,6 +101,15 @@ test.describe('API Testing Basics', () => {
         expect(Array.isArray(body)).toBeTruthy();
         expect(body.length).toBe(100);
     });
+
+    test('API List & Array Validation', async ({ request }) => {
+        const response = await request.get('https://jsonplaceholder.typicode.com/posts');
+        const body = await response.json();
+
+        expect(Array.isArray(body)).toBeTruthy();
+        expect(body.length).toBe(100);
+        expect(body[0]).toHaveProperty('id');
+    });
     
 });
 

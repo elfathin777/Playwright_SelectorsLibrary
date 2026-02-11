@@ -12,35 +12,38 @@ I am solving these challenges one by one using **Playwright (TypeScript)**.
 ## 📋 Challenge Progress
 Based on the official list of examples from `the-internet.herokuapp.com`.
 
-## 📋 Challenge Progress
-Progress tracking of automated scenarios from `the-internet.herokuapp.com`.
+---
 
-### ✅ Completed UI Test
-- [x] **Add/Remove Elements** (Handled dynamic list & counting)
-- [x] **Form Authentication** (Standard login flow & flash message validation)
-- [x] **Drag and Drop** (Simulated mouse drag actions)
-- [x] **Shadow DOM** (Utilized Playwright's shadow-piercing selectors)
-- [x] **JavaScript Alerts** (Handled Dialog listeners for Confirm/Dismiss)
-- [x] **File Upload** (Interacted with system file inputs)
-- [x] **Dynamic Loading** (Handled explicit waits & auto-retrying assertions)
-- [x] **Multiple Windows** (Handling new tabs/pages using `Promise.all`)
-- [x] **Dynamic Controls** (State verification: `toBeEditable` & `toBeVisible`)
-- [x] **Sortable Data Tables** (Complex row filtering & data validation)
-- [x] **Infinite Scroll** (Implemented **State-Based Polling** to handle flaky dynamic content)
-- [x] **API Testing** (Status codes & POST/GET.DELETE validation)
+### ✅ Completed Challenges
 
-### 📝 Backlog (To Do)
-_Common challenges I plan to automate next to broaden my automation coverage:_
+#### **UI Interaction Mastery**
 
-- [ ] **Checkboxes** (Verifying state and toggling multiple inputs)
-- [ ] **Dropdown** (Handling static and dynamic select options)
-- [ ] **Frames** (Nested frames & iFrame context switching)
-- [ ] **Hovers** (Simulating mouse hover to reveal hidden elements)
-- [ ] **Key Presses** (Simulating keyboard shortcuts and specific key events)
-- [ ] **Horizontal Slider** (Precise mouse movements for UI sliders)
-- [ ] **Broken Images** (Validating image response status via Network Interception)
-- [ ] **API Testing** (Direct server-side validation using Playwright's `request` context)
-- [ ] **Visual Comparison** (Implementing screenshot-based regression testing)
+* [x] **Checkboxes & Dropdowns** (Implemented smart logic for state verification)
+* [x] **Hovers** (Simulated mouse precision to reveal hidden elements)
+* [x] **Key Presses** (Utilized `page.keyboard` for stable global event simulation)
+* [x] **Infinite Scroll** (Implemented state-based polling for dynamic content)
+* [x] **Shadow DOM & Frames** (Piercing deep through nested elements)
+* [x] **Dynamic Loading** (Explicit waits & auto-retrying assertions)
+* [x] **Drag and Drop** (Simulated complex mouse drag actions)
+* [x] **Multiple Windows** (Handling tabs/pages using `Promise.all`)
+
+#### **API Testing (Backend Validation)**
+
+* [x] **CRUD Operations** (Handled GET, POST, and DELETE requests)
+* [x] **Update Strategy** (Deep dive into **PUT vs PATCH** differences)
+* [x] **Schema Validation** (Verifying data types: `string`, `number`, `boolean`)
+* [x] **Array & List Validation** (Validating length and structure of collection data)
+* [x] **CI/CD Integration** (Running tests automatically via GitHub Actions)
+
+---
+
+### 📝 Backlog (To-Do)
+
+*Materi yang akan dipelajari untuk memperluas cakupan otomasi:*
+
+* [ ] **Network Interception** (Mocking API responses & testing broken images)
+* [ ] **Visual Regression** (Screenshot-based testing for UI consistency)
+* [ ] **Authentication State** (Reusing login sessions to speed up tests)
 
 ---
 
